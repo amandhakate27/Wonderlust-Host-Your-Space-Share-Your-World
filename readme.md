@@ -123,9 +123,15 @@ DELETE /listings/:id/reviews/:revId - Delete review
 - **Environment Variables**: Sensitive data stored in `.env` file
 - **Input Validation**: Server-side validation for all user inputs
 
-## License
+## Screenshots
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+![All Listings](public/assets/listings.png)
+![Create Listing](public/assets/createListing.png)
+![Edit Listing](public/assets/editListing.png)
+![View Specific Listing](public/assets/viewSpecificListing.png)
+![Map Integration and Review](public/assets/map&review.png)  
+![Sign Up](public/assets/Signup.png)
+![Login](public/assets/login.png)
 
 ## Author
 
