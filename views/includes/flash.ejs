@@ -1,0 +1,26 @@
+<% function formatFlash(messages){ if(!messages) return '' ; if(Array.isArray(messages)){ const parts=messages.map(m=> {
+    if(typeof m === 'string') return m.trim();
+    if(m && m.message) return String(m.message).trim();
+    try { return JSON.stringify(m); } catch(e){ return String(m); }
+    }).filter(Boolean);
+    return parts.join(', ');
+    }
+    return String(messages).trim();
+    }
+    const successMsg = formatFlash(success);
+    const errorMsg = formatFlash(error);
+    %>
+
+    <% if (successMsg) { %>
+        <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+            <%= successMsg %>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+
+            <% if (errorMsg) { %>
+                <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
+                    <%= errorMsg %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <% } %>
