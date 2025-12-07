@@ -42,9 +42,19 @@ A full-stack travel listing platform where users can discover, share, and review
 
 ### Middleware & Utilities
 
+- **Body-Parser** - Request body parsing
+- **Express-Validator** - Input validation and sanitization
+- **Multer** - File upload handling
+- **Cloudinary** - Cloud image storage and management
 - **Method-Override** - HTTP verb support (PUT, DELETE)
 - **Connect-Flash** - Flash message middleware
 - **Dotenv** - Environment variable management
+
+### Frontend
+
+- **Bootstrap** - Responsive CSS framework
+- **MapLibre GL JS** - Interactive maps
+- **MapTiler** - Map tiles and geocoding
 
 ## Project Structure
 
@@ -113,7 +123,7 @@ DELETE /listings/:id/reviews/:revId - Delete review
 - **Environment Variables**: Sensitive data stored in `.env` file
 - **Input Validation**: Server-side validation for all user inputs
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
 
