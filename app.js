@@ -24,11 +24,11 @@ const reviewRouter = require('./routes/review.js');
 const userRouter = require('./routes/user.js');
 
 // PORT
-let port = 8080;
+let port = process.env.PORT || 8080;
 
 // EJS CONFIG
-app.set("view engine" , "ejs");
-app.set("views" , path.join(__dirname , "views"));
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.engine('ejs', ejsMate);
 
 
@@ -41,38 +41,38 @@ app.use(methodOverride('_method'));
 const dbUrl = process.env.ATLAS_DB_URL; // for mongodb atlas
 
 // MONGODB CONNECTION
-async function main(){
+async function main() {
     await mongoose.connect(dbUrl);
 }
-main().then((res)=>{
+main().then((res) => {
     console.log("DB connection established");
-}).catch((err)=>{
-    console.log("Error: " , err);
+}).catch((err) => {
+    console.log("Error: ", err);
 });
 
 // MONGODB STORE FOR SESSIONS
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret: process.env.SECRET ,
+        secret: process.env.SECRET,
     },
     touchAfter: 24 * 3600 // time period in seconds
 });
 
-store.on("error", function(e){
-    console.log("SESSION STORE ERROR" , e);
+store.on("error", function (e) {
+    console.log("SESSION STORE ERROR", e);
 });
 
 // SESSION CONFIG
 const sessionOptions = {
-    store ,
-    secret : process.env.SECRET,
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie : {
-        expires : Date.now()+7*24*60*60*1000,
-        maxAge : 7*24*60*60*1000,
-        httpOnly : true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
     }
 }
 
@@ -97,7 +97,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 //  GLOBAL RES.LOCALS (FLASH + CURRENT USER)
-app.use((req,res,next)=>{ // custom middleware to pass flash messages to all templates
+app.use((req, res, next) => { // custom middleware to pass flash messages to all templates
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
     // res.locals.currentUser = req.user;
@@ -127,18 +127,18 @@ app.use("/listings", listingRouter); // to handle root route redirection to /lis
 app.use("/listings/:id/reviews", reviewRouter); // to handle root route redirection to /listings
 
 // 404 HANDLER
-app.use((req,res,next)=>{
+app.use((req, res, next) => {
     next(new ExpressError(404, "Page Not Found"));
 });
 
 // ERROR HANDLER
-app.use((err, req,res, next)=>{
-   let {status = 500 , message = "ERROR ---- Something went wrong"} = err;
-//    res.status(status).send(message);
-res.status(status).render("error.ejs" , {err });
+app.use((err, req, res, next) => {
+    let { status = 500, message = "ERROR ---- Something went wrong" } = err;
+    //    res.status(status).send(message);
+    res.status(status).render("error.ejs", { err });
 })
 
 // SERVER
-app.listen(port, ()=>{
+app.listen(port, () => {
     console.log(`app is listening on port ${port}`);
 })
